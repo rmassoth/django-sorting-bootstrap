@@ -1,5 +1,5 @@
 from django.db import models
-from django.db.models.related import RelatedObject
+from django.db.models.fields.related import ForeignObjectRel
 from django.forms.forms import pretty_name
 from django.utils import six
 from django.utils.encoding import force_text
@@ -22,7 +22,7 @@ def label_for_field(name, model, return_attr=False):
     attr = None
     try:
         field = model._meta.get_field_by_name(name)[0]
-        if isinstance(field, RelatedObject):
+        if isinstance(field.related, RelatedObject):
             label = field.opts.verbose_name
         else:
             label = field.verbose_name
