@@ -117,6 +117,11 @@ def sort_link(context, text, sort_field, visible_name=None):
     ascending = None
     class_attrib = 'sortable'
     orig_sort_field = sort_field
+    if 'request' in context:
+        request = context['request']
+        getvars = request.GET.copy()
+        if 'sort_by' in getvars:
+            context['current_sort_field'] = getvars['sort_by']
     if context.get('current_sort_field') == sort_field:
         sort_field = '-%s' % sort_field
         visible_name = '-%s' % (visible_name or orig_sort_field)
@@ -164,7 +169,7 @@ def sort_link(context, text, sort_field, visible_name=None):
     url += extra_vars
 
     return {
-        'text': text, 'url': url, 'ascending': ascending, 'sorted_fields': sorted_fields, 'class_attrib': class_attrib
+        'text': text, 'url': url, 'ascending': ascending, 'sorted_fields': sorted_fields, 'class_attrib': class_attrib,
     }
 
 # registers the tags sort_link and sort_th with the same function sort_link

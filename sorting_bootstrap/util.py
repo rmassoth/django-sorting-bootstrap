@@ -22,7 +22,7 @@ def label_for_field(name, model, return_attr=False):
     attr = None
     try:
         field = model._meta.get_field_by_name(name)[0]
-        if isinstance(field.related, RelatedObject):
+        if isinstance(field, ForeignObjectRel):
             label = field.opts.verbose_name
         else:
             label = field.verbose_name
